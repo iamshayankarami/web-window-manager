@@ -1,0 +1,8 @@
+[package]
+name = "web-window-manager"
+version = "0.1.0"
+authors = ["Iamshayankarami <ftfsk8203@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+rocket = "0.4.5"
