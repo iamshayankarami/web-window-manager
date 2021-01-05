@@ -2,22 +2,24 @@
 #[macro_use] extern crate rocket;
 
 use rocket_contrib::templates::Template;
+use serde::Serialize;
 
 #[get("/")]
 fn index() -> &'static str {
-"Hello, world!"
+    "Shayan is the best programmer"
 }
 
 #[get("/<username>")]
 fn read_user_name(username: String) -> Template {
-    format!("Test {}", username.as_str())
-}
+    #[derive(Serialize)]
+    struct Context {
+        username: String
+    }
 
-#[post("/login", data="<username>, <password>")]
-fn login_form(username: Form<username>, password: Form<password>) -> Template {
-    Template::render("login", username, password)
+    let con = Context {username: String::from(username)};
+    Template::render("index", con)
 }
 
 fn main() {
-    rocket::ignite().mount("/", routes![index, read_user_name]).launch();
+    rocket::ignite().mount("/", routes![index, read_user_name]).attach(Template::fairing()).launch();
 }
